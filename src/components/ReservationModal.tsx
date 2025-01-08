@@ -17,10 +17,58 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    onClose();
+    setIsSubmitting(true);
+    setSuccessMessage('');
+    setErrorMessage('');
+
+    const formEndpoint = 'https://api.web3forms.com/submit';
+    const accessKey = 'e99b466d-e31a-4dfe-9e20-188a24f69b8c'; // Replace with your actual Web3Forms Access Key.
+
+    try {
+      const response = await fetch(formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: accessKey,
+          date: formData.date,
+          time: formData.time,
+          guests: formData.guests,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message
+        })
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSuccessMessage('Reservation submitted successfully!');
+        setFormData({
+          date: '',
+          time: '',
+          guests: '2',
+          name: '',
+          email: '',
+          phone: '',
+          message: ''
+        });
+      } else {
+        setErrorMessage('Failed to submit the reservation. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting the form:', error);
+      setErrorMessage('An error occurred. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+      onClose();
+    }
   };
 
   if (!isOpen) return null;
@@ -145,9 +193,14 @@ export default function ReservationModal({ isOpen, onClose }: ReservationModalPr
             <button
               type="submit"
               className="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white py-3 rounded-lg hover:from-blue-600 hover:to-blue-800 transition-all focus:outline-none focus:ring-4 focus:ring-blue-300"
+              disabled={isSubmitting}
             >
-              Confirm Reservation
+              {isSubmitting ? 'Submitting...' : 'Confirm Reservation'}
             </button>
+
+            {/* Success/Error Messages */}
+            {successMessage && <p className="text-green-500 mt-3">{successMessage}</p>}
+            {errorMessage && <p className="text-red-500 mt-3">{errorMessage}</p>}
           </form>
         </div>
       </div>
