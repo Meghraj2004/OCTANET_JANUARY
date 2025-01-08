@@ -33,7 +33,7 @@ Welcome to **MeghResto**, an attractive and user-friendly restaurant landing pag
 
 1. **Clone the repository**:  
    ```bash
-   git clone https://github.com/your-username/MeghResto.git
+  https://github.com/Meghraj2004/OCTANET_JANUARY.git
    ```
 
 2. **Navigate to the project directory**:  
@@ -64,11 +64,7 @@ Welcome to **MeghResto**, an attractive and user-friendly restaurant landing pag
 MeghResto/
 ├── public/
 ├── src/
-│   ├── assets/         # Images and static assets
 │   ├── components/     # Reusable UI components
-│   ├── pages/          # Page components (Home, Menu, Reservation, etc.)
-│   ├── styles/         # Global and component-specific styles
-│   ├── utils/          # Utility functions
 │   └── App.tsx         # Main application entry point
 ├── vite.config.ts      # Vite configuration
 ├── package.json
@@ -93,22 +89,7 @@ MeghResto/
 
 ## Contributing
 
-Contributions are welcome!  
-To contribute:  
-1. Fork this repository.  
-2. Create a new branch:  
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. Commit your changes:  
-   ```bash
-   git commit -m "Add your message here"
-   ```
-4. Push to the branch:  
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. Open a pull request.
+
 
 ---
 
