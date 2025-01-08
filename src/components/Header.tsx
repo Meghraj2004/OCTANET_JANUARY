@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Menu, X, Phone, ChevronLeft, ChevronRight } from 'lucide-react';
+import logo from '../components/p.jpg'
 
 const slides = [
+  
   {
     url: "https://images.unsplash.com/photo-1544025162-d76694265947",
     title: "Exquisite Dining Experience"
@@ -35,9 +37,14 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             <div className="flex-shrink-0">
-              <h1 className="text-2xl font-serif text-white">MeghResto</h1>
+              <img
+                src={logo}
+                alt="MeghResto Logo"
+                className="h-20 w-25"
+              />
             </div>
-            
+
+
             {/* Desktop Navigation */}
             <div className="hidden md:block">
               <div className="flex items-center space-x-8">
@@ -95,9 +102,8 @@ export default function Header() {
         {slides.map((slide, index) => (
           <div
             key={index}
-            className={`absolute inset-0 transition-opacity duration-1000 ${
-              index === currentSlide ? 'opacity-100' : 'opacity-0'
-            }`}
+            className={`absolute inset-0 transition-opacity duration-1000 ${index === currentSlide ? 'opacity-100' : 'opacity-0'
+              }`}
           >
             <img
               src={slide.url}
@@ -112,7 +118,7 @@ export default function Header() {
             </div>
           </div>
         ))}
-        
+
         {/* Slider Controls */}
         <button
           onClick={prevSlide}
