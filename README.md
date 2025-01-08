@@ -33,7 +33,7 @@ Welcome to **MeghResto**, an attractive and user-friendly restaurant landing pag
 
 1. **Clone the repository**:  
    ```bash
-  https://github.com/Meghraj2004/OCTANET_JANUARY.git
+   git clone https://github.com/Meghraj2004/OCTANET_JANUARY.git
    ```
 
 2. **Navigate to the project directory**:  
