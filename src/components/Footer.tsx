@@ -1,10 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Facebook, Instagram, Twitter, Mail, Phone, MapPin } from 'lucide-react';
 
 export default function Footer() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    subject: '',
+    message: '',
+  });
+  const [status, setStatus] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle contact form submission
+
+    const payload = {
+      ...formData,
+      access_key: 'e99b466d-e31a-4dfe-9e20-188a24f69b8c', // Replace with your Web3Forms access key
+    };
+
+    try {
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        setStatus('Message sent successfully!');
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          subject: '',
+          message: '',
+        });
+      } else {
+        setStatus('Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setStatus('Error sending message. Please check your network and try again.');
+    }
   };
 
   return (
@@ -19,7 +55,7 @@ export default function Footer() {
                 <MapPin size={20} />
                 <div>
                   <p>123 Gourmet Street</p>
-                  <p>Foodville,1 Pune 424203</p>
+                  <p>Foodville, Pune 424203</p>
                 </div>
               </div>
               <div className="flex items-center space-x-3">
@@ -50,27 +86,37 @@ export default function Footer() {
               <input
                 type="text"
                 placeholder="Name"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-white"
                 required
               />
               <input
                 type="email"
                 placeholder="Email"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-white"
                 required
               />
               <input
                 type="tel"
                 placeholder="Phone"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                 className="px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-white"
               />
               <input
                 type="text"
                 placeholder="Subject"
+                value={formData.subject}
+                onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                 className="px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-white"
               />
               <textarea
                 placeholder="Message"
+                value={formData.message}
+                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 className="md:col-span-2 px-4 py-2 rounded bg-gray-800 border border-gray-700 focus:outline-none focus:border-white"
                 rows={4}
                 required
@@ -82,8 +128,9 @@ export default function Footer() {
                 Send Message
               </button>
             </form>
+            {status && <p className="mt-4 text-green-500">{status}</p>}
           </div>
-        </div>      
+        </div>
       </div>
     </footer>
   );
